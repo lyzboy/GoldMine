@@ -1,0 +1,103 @@
+-Nodes always return one of these states:
+    Success: the condition has been met.
+    Failure: The condition was not and will not be met.
+    Running: A please wait state. The node is checking the validity of the condition
+
+- Nodes have to run asynchronously to not negatively affect the performace of the game, hence,
+    the running state.
+
+- Composite Nodes
+    - One or more children
+    - state based upon children.
+    - in running state while children are running
+
+    * Sequences
+        - All children must complete succesfully to evaluate as a Success (like AND statement).
+        - Typically executed from left to right (within the tree graph).
+        - Execution is halted if a child fails.
+
+    * Selectors
+        - Any child the returns true signals for this node to return true (Like OR statement).
+        - If ALL children return false, node fails.
+
+    * Parallel (Policy-Require-One)
+        - All children are executed simultaneously.
+        - Monitors each child status.
+        - Succeeds if one child succeeds.
+        - Does not wait for other children to complete.
+
+    * Parallel (Policy-Require-All)
+        - All children are executed simultaneously.
+        - Monitors each child status.
+        - Succeeds if all children succeed.
+        - Waits for all children to complete unless a child fails, then immediantly returns
+            failure.
+
+    * Random-Selector
+        - Randomly selects a child.
+        - Succeeds if one child succeeds.
+        - Fails if no children succeed.
+
+    * Random-Sequences
+        - Randomly selects a child.
+        - Succeeds if all children succeed
+        - Fails and stops executing if any child fails.
+
+
+- Decorators
+    - Can only have one child.
+    - Evalutes the state returned from child and responds based upon own parameters.
+    - Can specify how children are eveluated and how often
+    - Not mutuall exclusive and combine these nodes to suit needs.
+
+    * Inverter
+        - Inverts the result of its child node. (Like NOT statement).
+
+    * Repeater
+        - Repeats the execution of its child node a certain number of times or indefinitely.
+
+    * Until-Failure
+        - Repeats the execution of its child node until the child node fails.
+
+    * Until-Success
+        - Repeats the execution of its child node until the child node succeeds.
+
+    * Condition
+        - Checks a certain condition before executing its child node.
+
+    * Always-Succeed
+        - Always returns success, regardless of the result of its child node.
+
+    * Always-Fail
+        - Always returns failure, regardless of the result of its child node.
+
+    * Random
+        - Executes one of its child nodes at random.
+
+    * Limiter
+        - Limits the number of times its child node can be executed.
+
+    * Fake-State
+        - Uses a parameter to always evaluate true or false.
+        - Used to help debug or test a tree.
+
+    * Breakpoint
+        - Similar to breakpoint in code debugging.
+        - Can be used to send console (debug) messages.
+
+    * Cooldown
+        - Prevents its child node from being executed again until a certain amount of time has 
+            passed.
+
+    * In-Memory
+        - Stores the result of its child node for a certain amount of time and returns that 
+            result if executed again before the time limit is up.
+
+    * Semaphore Guard
+        - Blocks the execution of its child node until a semaphore is signaled.
+
+    * Force-Success
+        - Always returns success, but executes its child node.
+
+    * Force-Failure
+        - Always returns failure, but executes its child node.
