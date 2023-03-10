@@ -3,8 +3,8 @@
     Failure: The condition was not and will not be met.
     Running: A please wait state. The node is checking the validity of the condition
 
-- Nodes have to run asynchronously to not negatively affect the performace of the game, hence,
-    the running state.
+- Most trees will rune nodes have to run asynchronously to not negatively affect the performace 
+    of the game, hence, the running state.
 
 - Composite Nodes
     - One or more children
@@ -101,3 +101,8 @@
 
     * Force-Failure
         - Always returns failure, but executes its child node.
+
+- Leaf Nodes
+    - Can be used to describe any logic the agent can have (functions like walk(), kick(), shoot(), grab(), idle()).
+    - They are always the last node (allow there can be mulitiple leaves) and do not contain children.
+    - Like any other node, it must return one of the three states: Running, Success, Failure.
